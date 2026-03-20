@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="24/7 On-Road Vehicle Breakdown Emergency Service. Fast response, professional mechanics, and fully equipped service vans dispatched to your location.">
+  <title>RoadRescue — On-Road Vehicle Breakdown Emergency Service</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚨</text></svg>">
+</head>
+<body>
+
+  <!-- ========== NAVBAR ========== -->
+  <nav class="navbar" id="navbar">
+    <div class="container">
+      <a href="index.html" class="nav-logo">
+        <div class="logo-box">RR</div>
+        RoadRescue
+      </a>
+      <div class="nav-links" id="navLinks">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="services.html">Services</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="emergency.html" class="nav-sos">Emergency SOS</a>
+      </div>
+      <div class="nav-toggle" id="navToggle">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero" id="hero">
+    <div class="container hero-grid">
+      <div class="hero-content">
+        <h1 class="hero-title">
+          It has never <br>been easier to get <br> <span class="highlight">Road Rescue.</span>
+        </h1>
+        <p class="hero-description">
+          A service provider who comes to you for any vehicle breakdown. 24/7 on-road assistance, tracked in real-time.
+        </p>
+        <div class="hero-actions">
+          <a href="emergency.html" class="btn btn-black">Get Started</a>
+          <button class="btn btn-play" onclick="location.href='about.html'">
+            <span class="play-icon"></span>
+            How it works
+          </button>
+        </div>
+      </div>
+      
+      <div class="hero-visual">
+         <div class="hero-circle">
+            <div class="technician-avatar"></div>
+         </div>
+         <div class="floating-card card-rescue">
+            <div class="card-user" style="background: var(--neo-blue);"></div>
+            <div style="font-size: 0.8rem; font-weight: 800;">
+                <div>Expert Rescue Team</div>
+                <div style="font-weight: 500; opacity: 0.7;">Delhi | On-Site</div>
+            </div>
+         </div>
+         <div class="floating-card card-status">
+            <span style="font-size: 0.7rem; font-weight: 700; opacity:0.7;">Status: Dispatched</span>
+            <strong style="font-size: 0.9rem;">ETA: 15 min</strong>
+         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== QUICK SERVICES (NEO CARDS) ========== -->
+  <section class="section section-white">
+    <div class="container text-center">
+      <h2 class="hero-title" style="font-size: 3.5rem; margin-bottom: 50px;">Road assistance <br>made simple.</h2>
+      <div class="grid-3">
+        <div class="neo-card card-purple">
+          <h3 style="font-size: 1.8rem; margin-bottom: 15px;">Fast Dispatch</h3>
+          <p>Rescue teams are dispatched as soon as the request is received. No waiting on the side of the road.</p>
+        </div>
+        <div class="neo-card card-mint">
+          <h3 style="font-size: 1.8rem; margin-bottom: 15px;">Real-time Track</h3>
+          <p>Track your rescue vehicle live on the map while they are on the way. Full transparency at every step.</p>
+        </div>
+        <div class="neo-card card-pink">
+          <h3 style="font-size: 1.8rem; margin-bottom: 15px;">24/7 Support</h3>
+          <p>Experts are available around the clock for any roadside emergency. We never sleep, so you stay safe.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== VALUES TAGS (BLACK SECTION) ========== -->
+  <section class="section section-black">
+    <div class="container">
+      <h2 style="font-size: 3.5rem; margin-bottom: 30px;">Direct SOS Assistance</h2>
+      <p style="margin-bottom: 40px; font-weight: 600; opacity: 0.8;">Choose the authority you need assistance from. Your GPS location will be shared immediately.</p>
+      <div class="tags-container">
+        <div class="tag active">Police</div>
+        <div class="tag">Ambulance</div>
+        <div class="tag">Fire Brigade</div>
+        <div class="tag">Towing</div>
+        <div class="tag">Fuel Rescue</div>
+        <div class="tag">Tire Change</div>
+        <div class="tag">Battery Jump</div>
+        <div class="tag">Engine Repair</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="section section-white">
+    <div class="container" style="display:flex; justify-content:space-between; align-items:center;">
+      <h2 class="hero-title" style="font-size: 2rem; margin:0;">RoadRescue</h2>
+      <div style="display:flex; gap:30px; font-weight:700;">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="services.html">Services</a>
+        <a href="emergency.html">SOS</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

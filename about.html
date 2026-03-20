@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Learn about RoadRescue — modern on-road assistance.">
+  <title>About Us — RoadRescue</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ========== NAVBAR ========== -->
+  <nav class="navbar" id="navbar">
+    <div class="container">
+      <a href="index.html" class="nav-logo">
+        <div class="logo-box">RR</div>
+        RoadRescue
+      </a>
+      <div class="nav-links" id="navLinks">
+        <a href="index.html">Home</a>
+        <a href="about.html" class="active">About</a>
+        <a href="services.html">Services</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="emergency.html" class="nav-sos">Emergency SOS</a>
+      </div>
+      <div class="nav-toggle" id="navToggle">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ========== PAGE HEADER ========== -->
+  <section class="section" style="background: var(--neo-purple); border-bottom: var(--neo-border);">
+    <div class="container">
+      <h1 class="hero-title" style="font-size: 4rem;">Who We Are</h1>
+      <p style="font-size: 1.3rem; font-weight: 700; max-width: 600px;">A modern emergency breakdown solution built for drivers who need help — now.</p>
+    </div>
+  </section>
+
+  <!-- ========== ABOUT CONTENT ========== -->
+  <section class="section">
+    <div class="container">
+      <div class="hero-grid" style="align-items: flex-start;">
+        <div class="about-text">
+          <h2 style="font-size: 3rem; margin-bottom: 20px;">Built for the Real World.</h2>
+          <div class="neo-card card-yellow" style="padding: 40px; margin-bottom: 30px; background: var(--neo-yellow);">
+            <p style="font-size: 1.1rem; font-weight: 700;">
+              RoadRescue is a modern emergency vehicle breakdown service designed for drivers who can't afford to wait. 
+              Whether it's a flat tyre, an empty tank, or a dead battery — we bring help directly to you.
+            </p>
+          </div>
+        </div>
+        <div class="hero-visual">
+            <div class="neo-card card-pink" style="padding:0; overflow:hidden; height: 400px;">
+                <video src="logos/Tow Truck.mp4" autoplay loop muted playsinline style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;"></video>
+            </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== VALUES (CORE PRINCIPLES) ========== -->
+  <section class="section" style="background: var(--neo-pink); border-top: var(--neo-border); border-bottom: var(--neo-border);">
+    <div class="container">
+      <h2 style="font-size: 3.5rem; margin-bottom: 50px;">Our Core Principles</h2>
+      <div class="grid-3">
+        <div class="neo-card card-blue" style="color: #000; background: white;">
+          <h3 style="font-size: 1.8rem; margin-bottom: 15px;">Speed</h3>
+          <p>Every second matters in an emergency. We prioritize the fastest possible response time.</p>
+        </div>
+        <div class="neo-card card-purple" style="color: #000; background: white;">
+          <h3 style="font-size: 1.8rem; margin-bottom: 15px;">Reliability</h3>
+          <p>You can count on us — day or night, rain or shine, city or highway.</p>
+        </div>
+        <div class="neo-card card-yellow" style="color: #000; background: white;">
+          <h3 style="font-size: 1.8rem; margin-bottom: 15px;">Safety</h3>
+          <p>Your safety is our top priority — from arrival to getting you back on the road.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="section section-white">
+    <div class="container" style="display:flex; justify-content:space-between; align-items:center;">
+      <h2 class="hero-title" style="font-size: 2rem; margin:0;">RoadRescue</h2>
+      <div style="display:flex; gap:30px; font-weight:700;">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="services.html">Services</a>
+        <a href="emergency.html">SOS</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

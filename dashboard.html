@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Manage your road rescue requests, track history, and check active service statuses.">
+  <title>User Dashboard — RoadRescue</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚨</text></svg>">
+</head>
+<body>
+
+  <!-- ========== NAVBAR ========== -->
+  <nav class="navbar" id="navbar">
+    <div class="container">
+      <a href="index.html" class="nav-logo">
+        <div class="logo-box">RR</div>
+        RoadRescue
+      </a>
+      <div class="nav-links" id="navLinks">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="services.html">Services</a>
+        <a href="dashboard.html" class="active">Dashboard</a>
+        <a href="emergency.html" class="nav-sos">Emergency SOS</a>
+      </div>
+      <div class="nav-toggle" id="navToggle">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ========== PAGE HEADER ========== -->
+  <section class="page-header">
+    <div class="container">
+      <span class="section-label">User Portal</span>
+      <h1>My Dashboard</h1>
+      <p>View your previous rescue requests, track ongoing services, and manage your emergency contacts.</p>
+    </div>
+  </section>
+
+  <!-- ========== DASHBOARD CONTENT ========== -->
+  <section class="section" style="padding-top: 40px;">
+    <div class="container">
+      
+      <!-- Stats Overview -->
+      <div class="stats-overview" style="display:grid; grid-template-columns: repeat(3, 1fr); gap:30px; margin-bottom: 50px; background: white; padding: 40px; border: var(--neo-border); box-shadow: var(--neo-shadow);">
+        <div class="neo-card card-purple">
+          <h4 style="font-size: 1.2rem; margin-bottom: 10px;">Total Requests</h4>
+          <span class="value" id="totalRequests" style="font-size: 3rem; font-weight: 900;">0</span>
+        </div>
+        <div class="neo-card card-mint">
+          <h4 style="font-size: 1.2rem; margin-bottom: 10px;">Active Services</h4>
+          <span class="value" id="activeRequests" style="font-size: 3rem; font-weight: 900;">0</span>
+        </div>
+        <div class="neo-card card-pink">
+          <h4 style="font-size: 1.2rem; margin-bottom: 10px;">Last Service</h4>
+          <span class="value" id="lastService" style="font-size: 1.5rem; font-weight: 900;">None</span>
+        </div>
+      </div>
+
+      <!-- History Section -->
+      <div class="neo-card" style="background: white; padding: 40px;">
+        <h3 style="margin-bottom: 30px; font-size: 2.5rem;">Request History</h3>
+        <div style="overflow-x: auto;">
+          <table class="history-table">
+            <thead>
+              <tr>
+                <th>Date & Time</th>
+                <th>Service Type</th>
+                <th>Vehicle</th>
+                <th>Rescue Point</th>
+                <th>Status</th>
+                <th>Distance</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="historyTableBody">
+              <tr>
+                <td colspan="7" style="text-align: center; padding: 40px; font-weight: 700;">
+                  Fetching history...
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+    </div>
+  </section>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="section section-white">
+    <div class="container" style="display:flex; justify-content:space-between; align-items:center;">
+      <h2 class="hero-title" style="font-size: 2rem; margin:0;">RoadRescue</h2>
+      <div style="display:flex; gap:30px; font-weight:700;">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="services.html">Services</a>
+        <a href="emergency.html">SOS</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Leaflet Map -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <!-- GSAP for Smooth Tracking -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+  <!-- Removed floating SOS button -->
+  <script src="script.js"></script>
+  <script>
+    let trackingMap, userMarker, vehicleMarker, trackingInterval;
+
+    // Dashboard Specific Logic
+    document.addEventListener('DOMContentLoaded', async () => {
+      const historyTableBody = document.getElementById('historyTableBody');
+      const totalRequestsEl = document.getElementById('totalRequests');
+      const activeRequestsEl = document.getElementById('activeRequests');
+      const lastServiceEl = document.getElementById('lastService');
+
+      try {
+        const response = await fetch('http://localhost:3000/api/history');
+        const data = await response.json();
+
+        if (data.length === 0) {
+          historyTableBody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 40px; color: var(--text-muted);">No rescue history found.</td></tr>';
+          return;
+        }
+
+        totalRequestsEl.textContent = data.length;
+        const active = data.filter(r => r.status === 'dispatched' || r.status === 'urgent');
+        activeRequestsEl.textContent = active.length;
+        lastServiceEl.textContent = data[0].problemType || 'SOS';
+
+        historyTableBody.innerHTML = '';
+        data.forEach(req => {
+          const row = document.createElement('tr');
+          const date = new Date(req.timestamp).toLocaleString();
+          const type = req.problemType || 'SOS Emergency';
+          const vehicle = req.vehicleType || 'N/A';
+          const point = req.assignedPoint ? req.assignedPoint.name : 'Authorities Notified';
+          const statusClass = `status-${req.status}`;
+          const distance = req.distanceKm ? `${req.distanceKm} km` : '-';
+          
+          let trackBtn = '';
+          if((req.status === 'dispatched' || req.status === 'urgent') && req.assignedPoint) {
+            trackBtn = `<button class="btn btn-black" style="padding: 10px 18px; font-size: 0.9rem;" onclick='startTracking(${JSON.stringify(req)})'>Track Rescue</button>`;
+          }
+
+          row.innerHTML = `
+            <td>${date}</td>
+            <td style="text-transform: capitalize;">${type}</td>
+            <td style="text-transform: capitalize;">${vehicle}</td>
+            <td>${point}</td>
+            <td><span class="status-badge ${statusClass}">${req.status}</span></td>
+            <td>${distance}</td>
+            <td>${trackBtn}</td>
+          `;
+          historyTableBody.appendChild(row);
+        });
+      } catch (error) {
+        console.error('Error fetching dashboard data:', error);
+        historyTableBody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 40px; color: #ff6b6b;">Failed to connect to backend server.</td></tr>';
+      }
+    });
+
+    function startTracking(req) {
+        // Remove existing tracking rows first
+        const existingRow = document.querySelector('.tracking-row');
+        if(existingRow) {
+            if(existingRow.dataset.id === req.timestamp.toString()) {
+                // If clicking same row, just toggle/remove
+                existingRow.remove();
+                if(trackingInterval) clearInterval(trackingInterval);
+                return;
+            }
+            existingRow.remove();
+        }
+
+        // Find the parent button's row
+        const targetBtn = document.querySelector(`button[onclick*='${req.timestamp}']`);
+        const parentRow = targetBtn.closest('tr');
+        
+        // Create tracking row
+        const trackRow = document.createElement('tr');
+        trackRow.className = 'tracking-row';
+        trackRow.dataset.id = req.timestamp;
+        trackRow.innerHTML = `
+            <td colspan="7">
+                <div class="tracking-dropdown" style="padding: 24px; background: rgba(255,255,255,0.02); border-radius: 12px; margin-bottom: 20px; border: 1px solid var(--border-color);">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+                        <h4 style="margin:0;">🛰️ Live Tracking: ${req.problemType}</h4>
+                        <div id="trackingStatus" style="color: var(--accent); font-weight:700;">Vehicle Dispatched...</div>
+                    </div>
+                    <div id="trackingMap" style="height: 350px; border: 4px solid black; box-shadow: 4px 4px 0px black;"></div>
+                </div>
+            </td>
+        `;
+        
+        // Insert after parent row
+        parentRow.after(trackRow);
+        
+        // GSAP Expand
+        gsap.from('.tracking-dropdown', { height: 0, opacity: 0, duration: 0.5, ease: 'power2.out' });
+
+        // Init Map
+        setTimeout(() => {
+            trackingMap = L.map('trackingMap').setView([req.location.lat, req.location.lng], 13);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; OpenStreetMap'
+            }).addTo(trackingMap);
+
+            const userPos = [req.location.lat, req.location.lng];
+            const depotPos = [req.assignedPoint.lat, req.assignedPoint.lng];
+            
+            userMarker = L.marker(userPos).addTo(trackingMap).bindPopup("You are here");
+            
+            // Custom SOS Emergency Vehicle SVG
+            const sosVehicleSVG = `
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="40" height="40">
+                <circle cx="256" cy="256" r="240" fill="#ff4d00" fill-opacity="0.2" stroke="#ff4d00" stroke-width="10"/>
+                <path d="M256 80c-97.2 0-176 78.8-176 176s78.8 176 176 176 176-78.8 176-176S353.2 80 256 80zm0 320c-79.5 0-144-64.5-144-144s64.5-144 144-144 144 64.5 144 144-64.5 144-144 144z" fill="#ff4d00"/>
+                <path d="M256 160c-53 0-96 43-96 96s43 96 96 96 96-43 96-96-43-96-96-96z" fill="#fff"/>
+                <text x="50%" y="55%" text-anchor="middle" dominant-baseline="middle" font-family="Arial" font-size="120" font-weight="900" fill="#ff4d00">SOS</text>
+              </svg>
+            `;
+            
+            const sosIcon = L.divIcon({
+                html: sosVehicleSVG,
+                className: 'emergency-sos-icon',
+                iconSize: [40, 40],
+                iconAnchor: [20, 20]
+            });
+
+            vehicleMarker = L.marker(depotPos, { icon: sosIcon }).addTo(trackingMap).bindPopup("Rescue Vehicle").openPopup();
+
+            // Simulate movement
+            if(trackingInterval) clearInterval(trackingInterval);
+            let progress = 0;
+            trackingInterval = setInterval(() => {
+                progress += 0.01;
+                if (progress >= 1) {
+                    progress = 1;
+                    clearInterval(trackingInterval);
+                    document.getElementById('trackingStatus').textContent = "Arrived!";
+                }
+                const lat = depotPos[0] + (userPos[0] - depotPos[0]) * progress;
+                const lng = depotPos[1] + (userPos[1] - depotPos[1]) * progress;
+                vehicleMarker.setLatLng([lat, lng]);
+                
+                const bounds = L.latLngBounds([userPos, [lat, lng]]);
+                trackingMap.fitBounds(bounds, { padding: [40, 40] });
+            }, 1000);
+        }, 100);
+    }
+
+    // SOS Trigger helper for Dashboard
+    document.getElementById('sosTrigger').addEventListener('click', async () => {
+      if (confirm('Send immediate SOS alert to local authorities with your current location?')) {
+        navigator.geolocation.getCurrentPosition(async (pos) => {
+          const response = await fetch('http://localhost:3000/api/sos', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              userLat: pos.coords.latitude,
+              userLng: pos.coords.longitude,
+              phoneNumber: 'USER_REGISTERED_PHONE'
+            })
+          });
+          const result = await response.json();
+          alert(result.message);
+          window.location.reload();
+        }, () => {
+          alert('Location access required for SOS feature.');
+        });
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="RoadRescue Services — Fuel, Tyre, Battery, and Towing.">
+  <title>Our Services — RoadRescue</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+<body style="background-color: var(--neo-bg);">
+
+  <!-- ========== NAVBAR ========== -->
+  <nav class="navbar" id="navbar">
+    <div class="container">
+      <a href="index.html" class="nav-logo">
+        <div class="logo-box">RR</div>
+        RoadRescue
+      </a>
+      <div class="nav-links" id="navLinks">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="services.html" class="active">Services</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="emergency.html" class="nav-sos">Emergency SOS</a>
+      </div>
+      <div class="nav-toggle" id="navToggle">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ========== PAGE HEADER ========== -->
+  <section class="section" style="background: var(--neo-yellow); border-bottom: var(--neo-border);">
+    <div class="container">
+      <h1 class="hero-title" style="font-size: 4rem;">Our Services</h1>
+      <p style="font-size: 1.3rem; font-weight: 700; max-width: 600px;">Expert rescue teams on the move. Select a service to get help instantly.</p>
+    </div>
+  </section>
+
+  <!-- ========== SERVICE DETAILS ========== -->
+  <section class="section">
+    <div class="container">
+      <div class="grid-3" style="grid-template-columns: repeat(2, 1fr); gap: 40px;">
+        
+        <!-- Fuel Delivery -->
+        <div class="neo-card card-purple">
+          <div style="width: 100px; height: 100px; border: var(--neo-border); margin-bottom: 20px; overflow: hidden; background: #fff;">
+            <video src="logos/Fuel Pump.mp4" autoplay loop muted playsinline style="width:100%; height:100%; object-fit:cover;"></video>
+          </div>
+          <h2 style="font-size: 2.5rem; margin-bottom: 20px;">Fuel Delivery</h2>
+          <p style="margin-bottom: 30px; font-weight: 600;">Ran out of fuel? We deliver petrol or diesel directly to your location fast.</p>
+          <div style="background: rgba(0,0,0,0.05); padding: 20px; border: 2px solid #000; margin-bottom: 30px;">
+            <ul style="list-style: none; font-weight: 700;">
+              <li>- Quick location dispatch</li>
+              <li>- Petrol & Diesel available</li>
+              <li>- 24/7 Roadside support</li>
+            </ul>
+          </div>
+          <button class="btn btn-black request-service-btn" data-service="fuel" style="width: 100%;">Request Fuel Now</button>
+        </div>
+
+        <!-- Tyre Repair -->
+        <div class="neo-card card-pink">
+          <div style="width: 100px; height: 100px; border: var(--neo-border); margin-bottom: 20px; overflow: hidden; background: #fff; border-radius: 50%; box-shadow: 4px 4px 0px #000;">
+            <video src="logos/Tyre Repair.mp4" autoplay loop muted playsinline style="width:100%; height:100%; object-fit:cover;"></video>
+          </div>
+          <h2 style="font-size: 2.5rem; margin-bottom: 20px;">Tyre Repair</h2>
+          <p style="margin-bottom: 30px; font-weight: 600;">Flat tyre? Puncture? Our team arrives with the right tools to get you moving.</p>
+          <div style="background: rgba(0,0,0,0.05); padding: 20px; border: 2px solid #000; margin-bottom: 30px;">
+            <ul style="list-style: none; font-weight: 700;">
+              <li>- On-site tube repair</li>
+              <li>- Spare tyre replacement</li>
+              <li>- Air pressure check</li>
+            </ul>
+          </div>
+          <button class="btn btn-black request-service-btn" data-service="tyre" style="width: 100%;">Request Tyre Repair</button>
+        </div>
+
+        <!-- Battery Support -->
+        <div class="neo-card card-blue">
+          <div style="width: 100px; height: 100px; border: var(--neo-border); margin-bottom: 20px; overflow: hidden; background: #fff; border-radius: 50%; box-shadow: 4px 4px 0px #000;">
+            <video src="logos/Car Battery.mp4" autoplay loop muted playsinline style="width:100%; height:100%; object-fit:cover;"></video>
+          </div>
+          <h2 style="font-size: 2.5rem; margin-bottom: 20px;">Battery Support</h2>
+          <p style="margin-bottom: 30px; font-weight: 600;">Dead battery? We provide professional jump-starts and on-site replacements.</p>
+          <div style="background: rgba(0,0,0,0.05); padding: 20px; border: 2px solid #000; margin-bottom: 30px;">
+            <ul style="list-style: none; font-weight: 700;">
+              <li>- Jump-start service</li>
+              <li>- Battery diagnostics</li>
+              <li>- New battery install</li>
+            </ul>
+          </div>
+          <button class="btn btn-black request-service-btn" data-service="battery" style="width: 100%;">Request Battery Help</button>
+        </div>
+
+        <!-- Towing Service -->
+        <div class="neo-card card-mint" style="background: var(--neo-orange);">
+          <div style="width: 100px; height: 100px; border: var(--neo-border); margin-bottom: 20px; overflow: hidden; background: #fff; border-radius: 50%; box-shadow: 4px 4px 0px #000;">
+            <video src="logos/Tow Truck.mp4" autoplay loop muted playsinline style="width:100%; height:100%; object-fit:cover;"></video>
+          </div>
+          <h2 style="font-size: 2.5rem; margin-bottom: 20px;">Towing</h2>
+          <p style="margin-bottom: 30px; font-weight: 600;">Serious breakdown? We safely transport your vehicle to the nearest garage.</p>
+          <div style="background: rgba(0,0,0,0.05); padding: 20px; border: 2px solid #000; margin-bottom: 30px;">
+            <ul style="list-style: none; font-weight: 700;">
+              <li>- Flatbed towing</li>
+              <li>- Secure transport</li>
+              <li>- All-day availability</li>
+            </ul>
+          </div>
+          <button class="btn btn-black request-service-btn" data-service="towing" style="width: 100%;">Request Towing Now</button>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== SERVICE REQUEST SLIDER (MODAL) ========== -->
+  <style>
+    .slider-overlay { position: fixed; inset: 0; background: rgba(168, 230, 207, 0.95); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 20px; }
+    .slider-overlay.active { display: flex; }
+    .slider-container { background: #fff; border: 4px solid #000; box-shadow: 20px 20px 0px #000; width: 100%; max-width: 600px; padding: 50px; position: relative; }
+    .slider-close { position: absolute; top: 15px; right: 15px; background: #000; color: #fff; border: none; font-size: 2rem; width: 40px; height: 40px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+    .progress-bar { height: 10px; background: #000; width: 0%; margin-bottom: 30px; }
+    .location-indicator { margin: 20px 0; font-weight: 800; display: flex; align-items: center; gap: 10px; }
+    .location-indicator .dot { width: 12px; height: 12px; background: var(--neo-red); border-radius: 50%; animation: pulse 0.8s infinite alternate;}
+    @keyframes pulse { from {opacity: 1;} to {opacity: 0.3;} }
+  </style>
+
+  <div class="slider-overlay" id="serviceSliderOverlay">
+    <div class="slider-container">
+      <button class="slider-close" id="closeSlider">&times;</button>
+      <div class="progress-bar" id="progressBar"></div>
+
+      <div class="slider-wrapper" id="sliderWrapper">
+        <!-- Step 1 -->
+        <div class="slider-step" id="step1">
+          <h2 style="font-size: 2.5rem; margin-bottom: 15px;" id="sliderServiceName">Service Request</h2>
+          <p style="margin-bottom: 30px; font-weight: 700;">Enter your name to start the rescue process.</p>
+          <input type="text" id="sliderName" class="form-control" placeholder="Full Name">
+          <button class="btn btn-black next-step" style="width:100%;">Next Step</button>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="slider-step" id="step2" style="display:none;">
+          <h2 style="font-size: 2.5rem; margin-bottom: 15px;">Vehicle Details</h2>
+          <p style="margin-bottom: 30px; font-weight: 700;">Tell us what you're driving.</p>
+          <input type="text" id="sliderVehicleNum" class="form-control" placeholder="Vehicle Number">
+          <input type="tel" id="sliderPhone" class="form-control" placeholder="Phone Number">
+          <div style="display:flex; gap:20px;">
+            <button class="btn btn-play prev-step" style="flex:1;">Back</button>
+            <button class="btn btn-black next-step" style="flex:1;">Next Step</button>
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="slider-step" id="step3" style="display:none;">
+          <h2 style="font-size: 2.5rem; margin-bottom: 15px;">Confirm Location</h2>
+          <div id="sliderLocStatus" class="location-indicator">
+            <div class="dot"></div>
+            <span>Detecting your coordinates...</span>
+          </div>
+          <div id="sliderMap" style="height: 250px; border: 3px solid #000; margin-bottom: 20px; box-shadow: 4px 4px 0px #000;"></div>
+          <input type="text" id="sliderLocation" class="form-control" readOnly placeholder="Fetching location address...">
+          <div style="display:flex; gap:20px;">
+            <button class="btn btn-play prev-step" style="flex:1;">Back</button>
+            <button class="btn btn-black" id="submitSliderRequest" style="flex:1;">Request Rescue</button>
+          </div>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="slider-step" id="step4" style="display:none;">
+          <h2 style="font-size: 2.5rem; margin-bottom: 15px;">Rescue Dispatched</h2>
+          <p style="margin-bottom: 20px; font-weight: 700;" id="sliderSuccessMsg">A technician is on the way.</p>
+          <div style="background: var(--neo-yellow); border: 2px solid #000; padding: 15px; margin-bottom: 30px; font-weight: 900;">
+            ETA: <span id="sliderETA">...</span>
+          </div>
+          <div style="display:flex; gap:20px;">
+            <a href="dashboard.html" class="btn btn-black" style="flex:1;">My Dashboard</a>
+            <button class="btn btn-play" id="sliderFinalClose" style="flex:1;">Done</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
