@@ -2,7 +2,7 @@
 // ROADRESCUE — MAIN JAVASCRIPT
 // =========================================
 
-const API_BASE_URL = 'http://localhost:3000/api';
+const API_BASE_URL = ''; // Removed backend for frontend static hosting
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -77,9 +77,13 @@ document.addEventListener('DOMContentLoaded', () => {
       .bindPopup('Your Location (Detected)').openPopup();
 
     // Fetch Rescue Points from API
-    fetch(`${API_BASE_URL}/points`)
-      .then(res => res.json())
-      .then(points => {
+    const pointsPromise = Promise.resolve([
+      { id: 1, name: "Connaught Place Depot", lat: 28.6304, lng: 77.2177 },
+      { id: 2, name: "South Ex Rescue Hub", lat: 28.5677, lng: 77.2212 },
+      { id: 3, name: "Gurgaon Sector 29 Unit", lat: 28.4682, lng: 77.0652 },
+      { id: 4, name: "Noida Sector 18 Patrol", lat: 28.5708, lng: 77.3228 }
+    ]);
+    pointsPromise.then(points => {
         rescuePoints = points;
         points.forEach(point => {
           L.circleMarker([point.lat, point.lng], {
@@ -147,13 +151,15 @@ document.addEventListener('DOMContentLoaded', () => {
       };
 
       try {
-        const response = await fetch(`${API_BASE_URL}/request-help`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(formData)
+        // Simulate network delay and mock response
+        const result = await new Promise(resolve => {
+          setTimeout(() => {
+            resolve({
+              eta: Math.floor(Math.random() * 15) + 10,
+              request: { assignedPoint: { name: "Nearest Rescue Patrol" } }
+            });
+          }, 1500);
         });
-
-        const result = await response.json();
 
         // Update confirmation UI
         document.getElementById('etaVal').textContent = `${result.eta} Minutes`;
@@ -353,13 +359,15 @@ document.addEventListener('DOMContentLoaded', () => {
       };
 
       try {
-        const response = await fetch(`${API_BASE_URL}/request-help`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(formData)
+        // Simulate network delay and mock response
+        const result = await new Promise(resolve => {
+          setTimeout(() => {
+            resolve({
+              eta: Math.floor(Math.random() * 15) + 10,
+              request: { assignedPoint: { name: "Nearest Rescue Patrol" } }
+            });
+          }, 1500);
         });
-
-        const result = await response.json();
         
         document.getElementById('sliderETA').textContent = `${result.eta} Minutes`;
         currentStep = 3; // Step 4: Success
@@ -381,17 +389,14 @@ document.addEventListener('DOMContentLoaded', () => {
       if (confirm('EMERGENCY SOS: Send immediate distress signal with my location?')) {
         navigator.geolocation.getCurrentPosition(async (pos) => {
           try {
-            const res = await fetch(`${API_BASE_URL}/sos`, {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                userLat: pos.coords.latitude,
-                userLng: pos.coords.longitude,
-                phoneNumber: 'EMERGENCY_BROADCAST'
-              })
-            });
-            const data = await res.json();
-            alert(`✅ ${data.message}\nSignal ID: ${data.signalId}`);
+            // Simulate SOS request
+            setTimeout(() => {
+              const data = {
+                message: "Distress signal received by nearest authorities.",
+                signalId: `EMG-${Math.floor(Math.random() * 10000)}`
+              };
+              alert(`✅ ${data.message}\nSignal ID: ${data.signalId}`);
+            }, 1000);
           } catch (e) {
             alert('Failed to send SOS signal. Please call 112 or local emergency services.');
           }

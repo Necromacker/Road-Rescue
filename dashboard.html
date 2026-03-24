@@ -123,8 +123,27 @@
       const lastServiceEl = document.getElementById('lastService');
 
       try {
-        const response = await fetch('http://localhost:3000/api/history');
-        const data = await response.json();
+        // Simulate fetch mock history
+        const data = [
+          {
+            timestamp: Date.now() - 1000 * 60 * 15, // 15 mins ago
+            problemType: "Engine Issue",
+            vehicleType: "Sedan",
+            assignedPoint: { name: "South Ex Rescue Hub", lat: 28.5677, lng: 77.2212 },
+            status: "dispatched",
+            distanceKm: "4.2",
+            location: { lat: 28.6139, lng: 77.2090 }
+          },
+          {
+            timestamp: Date.now() - 1000 * 60 * 60 * 24 * 2, // 2 days ago
+            problemType: "Flat Tire",
+            vehicleType: "SUV",
+            assignedPoint: { name: "Connaught Place Depot", lat: 28.6304, lng: 77.2177 },
+            status: "resolved",
+            distanceKm: "12.5",
+            location: { lat: 28.5000, lng: 77.1000 }
+          }
+        ];
 
         if (data.length === 0) {
           historyTableBody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 40px; color: var(--text-muted);">No rescue history found.</td></tr>';
@@ -262,18 +281,12 @@
     document.getElementById('sosTrigger').addEventListener('click', async () => {
       if (confirm('Send immediate SOS alert to local authorities with your current location?')) {
         navigator.geolocation.getCurrentPosition(async (pos) => {
-          const response = await fetch('http://localhost:3000/api/sos', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              userLat: pos.coords.latitude,
-              userLng: pos.coords.longitude,
-              phoneNumber: 'USER_REGISTERED_PHONE'
-            })
-          });
-          const result = await response.json();
-          alert(result.message);
-          window.location.reload();
+          // Simulate SOS call
+          setTimeout(() => {
+            const result = { message: "SOS Alert Received! Emergency authorities have been notified." };
+            alert(result.message);
+            window.location.reload();
+          }, 800);
         }, () => {
           alert('Location access required for SOS feature.');
         });

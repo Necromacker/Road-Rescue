@@ -89,16 +89,7 @@
         const lng = pos.coords.longitude.toFixed(6);
         gpsEl.textContent = `COORDS: ${lat}, ${lng}`;
         
-        fetch('http://localhost:3000/api/sos', {
-          method: 'POST',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify({
-            userLat: pos.coords.latitude,
-            userLng: pos.coords.longitude,
-            phoneNumber: 'AUTHORITY_PORTAL',
-            target: target
-          })
-        });
+        // Simulate SOS broadcast (no backend)
 
         setTimeout(() => {
           document.getElementById('statusHeader').textContent = "SIGNAL SENT";
